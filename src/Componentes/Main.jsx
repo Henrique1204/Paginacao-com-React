@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Card from "./Card.jsx";
 import "../Css/Main.css";
 
-export default () => {
+buscarDados = async (url) => {
+  try {
+    const req = await fetch(url);
+    const dados = await req.json();
 
-  return (
-    <main className="Main container">
-      <h1 className="col-12">Livro</h1>
-      <Card
-        img="./img/livro.png"
-        titulo="Milk and Honey Milk and Honey Milk and Honey"
-        autor="Henrique P."
-        resumo="Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar."
-      />
+    return dados;
+  } catch (e) {
+    console.log(e.message);
+  }
+}
 
-      <Card
-        img="./img/livro.png"
-        titulo="Milk and Honey Milk and Honey Milk and Honey"
-        autor="Henrique P."
-        resumo="Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar. Melhor livro sobre leite e mel que você vai encontrar."
-      />
-    </main>
-  );
+export default class Main extends Component {
+  state = {
+    dados: []
+  }
+
+  componentDidMount = async () => {
+    const dados = await this.buscarDados("http://localhost:3000/livros");
+
+    this.setState({dados});
+  }
+
+  render() {
+    return (
+      <main className="Main container">
+        <h1 className="col-12">Livro</h1>
+
+        {this.state.dados.map((item) => (
+          <Card img="./img/livro.png" titulo={item.titulo} autor={item.autor} resumo={item.resumo}/>
+        ))}
+      </main>
+    );
+  }
 }
