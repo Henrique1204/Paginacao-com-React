@@ -1,0 +1,24 @@
+.Main {
+    padding: 60px 0;
+}
+
+.Main h1 {
+    font-family: "Quando", serif;
+    font-size: 24px;
+    color: rgba(18, 31, 31, 0.2);
+}
+
+.Main h1::after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    margin-top: 6px;
+    background-color: currentColor;
+    display: block;
+}
+
+@media only screen and (max-width: 739px) {
+    .Main h1 {
+        margin-bottom: 0;
+    }
+}
